@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>!!! SYSTEM ALERT !!!</title>
+<style>
+body{
+  margin:0;
+  padding:0;
+  background:black;
+  color:red;
+  font-family:monospace;
+  text-align:center;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+#msg{
+  font-size:32px;
+  animation: blink 0.3s infinite;
+}
+@keyframes blink{
+  0%{opacity:1;}
+  50%{opacity:0;}
+  100%{opacity:1;}
+}
+#progress{
+  width:80%;
+  background:#222;
+  border:2px solid red;
+  margin-top:20px;
+  height:25px;
+  border-radius:5px;
+}
+#bar{
+  width:0%;
+  height:100%;
+  background:red;
+}
+button{
+  padding:12px 25px;
+  font-size:18px;
+  margin-top:30px;
+  display:none;
+  position:absolute;
+}
+</style>
+</head>
+<body>
+
+<h1>⚠ CRITICAL SYSTEM FAILURE ⚠</h1>
+<div id="msg">Virus detected! Deleting files...</div>
+
+<div id="progress">
+  <div id="bar"></div>
+</div>
+
+<button onclick="fix()" id="fixBtn">Fix Now</button>
+
+<audio id="alarm" loop>
+  <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg">
+</audio>
+
+<script>
+let bar = document.getElementById("bar");
+let msg = document.getElementById("msg");
+let button = document.getElementById("fixBtn");
+let alarm = document.getElementById("alarm");
+
+alarm.play().catch(()=>{console.log("Audio blocked, tap screen for sound")});
+
+let popups = [
+  "CRITICAL ERROR!", 
+  "SYSTEM FAILURE!", 
+  "DATA LOSS IMMINENT!", 
+  "VIRUS DETECTED!", 
+  "ACCESS DENIED!", 
+  "mampus file lu gua ambil"
+];
+
+let progress = 0;
+let interval = setInterval(()=>{
+  progress += Math.random()*3;
+  if(progress > 100) progress = 100;
+  bar.style.width = progress + "%";
+
+  // Intensify shake and blink
+  document.body.style.transform = `translate(${Math.random()*15-7.5}px,${Math.random()*15-7.5}px)`;
+  msg.style.color = ["red","yellow","orange"][Math.floor(Math.random()*3)];
+
+  // Random popup
+  if(Math.random() < 0.05){
+    alert(popups[Math.floor(Math.random()*popups.length)]);
+  }
+
+  // Fake countdown in msg
+  msg.innerText = `Virus detected! Deleting files... ${Math.floor(100-progress)}s remaining`;
+
+  if(progress>=100){
+    clearInterval(interval);
+    document.body.style.transform="none";
+    button.style.display="block";
+    // Position button random
+    button.style.top = Math.random()*window.innerHeight*0.6 + "px";
+    button.style.left = Math.random()*window.innerWidth*0.6 + "px";
+    msg.innerText = "Process complete! Click button to fix.";
+  }
+},100);
+
+function fix(){
+  alarm.pause();
+  document.body.style.background="green";
+  document.body.style.color="white";
+  document.body.innerHTML = "<h1>goblok kena prank😹</h1><p>makasih data nya, aowkaowkak.</p>";
+}
+</script>
+
+</body>
+</html>
